@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:XAmarinPlay"
+             x:Class="XAmarinPlay.MainPage"
+             x:Name="rootElement">
+<Grid BackgroundColor="Blue">
+    <ListView ItemsSource = "{Binding FutureEvents}" BackgroundColor="Red">
+            <ListView.Header>
+                <Button Text="Add New Event" Command="{Binding ShowAddEventControls}"></Button>
+            </ListView.Header>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Edit" Command="{Binding Source={x:Reference rootElement}, Path=BindingContext.ShowEditEventControls}" CommandParameter="{Binding .}"></MenuItem>
+                            <MenuItem Text="Delete" Command="{Binding Source={x:Reference rootElement}, Path=BindingContext.DeleteSelectedEvent}" CommandParameter="{Binding .}"></MenuItem>
+                        </ViewCell.ContextActions>
+                    <Label Text="{Binding EventName}"></Label>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+        <Frame IsVisible="{Binding AddEventControlsVisible}" BackgroundColor="LightGray" Opacity=".7" HeightRequest="400" WidthRequest="200" VerticalOptions="CenterAndExpand" HorizontalOptions="Center">
+            <StackLayout >
+                <Entry Text="{Binding NewEventName}"></Entry>
+                <DatePicker Date="{Binding NewEventDate}"></DatePicker>
+                <Button Text="Done" Command="{Binding AddNewEvent}"></Button>
+                <Button Text="Cancel" Command="{Binding CancelAddNewEvent}"></Button>
+            </StackLayout>
+    </Frame>
+        <Frame IsVisible="{Binding EditEventcontrolsVisible}" BackgroundColor="LightGray" Opacity=".7" HeightRequest="400" WidthRequest="200" VerticalOptions="CenterAndExpand" HorizontalOptions="Center">
+            <StackLayout >
+                <Entry Text="{Binding CurrentlySelectedEvent.EventName}"></Entry>
+                <DatePicker Date="{Binding CurrentlySelectedEvent.EventDate}"></DatePicker>
+                <Button Text="Close" Command="{Binding CloseEditEventControls}"></Button>                
+            </StackLayout>
+        </Frame>
+</Grid>
+</ContentPage>
